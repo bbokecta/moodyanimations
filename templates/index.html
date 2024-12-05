@@ -4,26 +4,29 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Moody Animation</title>
-    <link type="text/css" rel="stylesheet" href="main.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/style.css">
+    <style>
+			body { margin: 0; }
+		</style>
     <script type="importmap">
-        {
-          "imports": {
-            "three": "https://cdn.jsdelivr.net/npm/three@<v0.170.0>/build/three.module.js",
-            "three/addons/": "https://cdn.jsdelivr.net/npm/three@<v0.170.0>/examples/jsm/"
-          }
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/"
         }
+      }
       </script>
       
 </head>
-<body style="background-color: pink; padding-left: 30%;">
-	<script type="module" src="/static/js/script.js"></script>
-    <img src="https://urlme.me/{{number}}/{{bot_answer}}.jpg"/>
+<body style="background-color: pink;">
+	<script type="module" src="/static/js/testing.js"></script>
+    <!-- <img src="https://urlme.me/{{number}}/{{bot_answer}}.jpg"/> -->
 	<form method="POST">
             <label>Question:</label><br>
             <input name=req_question type="text" value={{question}}><br><br> 
             <input type="submit" value="Submit!"><br><br>
 	</form>
 
-    <!-- <p>{{bot_answer}}</p>   -->
+    <p>{{bot_answer}}</p>  
 </body>
 </html>
