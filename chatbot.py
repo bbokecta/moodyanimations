@@ -11,7 +11,7 @@ client = AzureOpenAI(
 
 def get_response(question):
 	my_messages = [
-	{"role": "system", "content": "Tell me your answer like a moody teenager, then after a hyphen, give me your answer in one word"},
+	{"role": "system", "content": "Tell me your answer like a moody teenager"},
 	{"role": "user", "content": question}
 ]
 
