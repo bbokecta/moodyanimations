@@ -2,32 +2,40 @@ import threading
 import time
 import requests
 import traceback
+from threading import Thread
 
 with open("telegram_keys.txt", "r") as telegram_file:
     telegram_key = telegram_file.read()
 
-# def message_check(timer_runs):
-#     while timer_runs.is_set():
-#         recent_message = requests.post(
-#                 url=f"https://api.telegram.org/bot{telegram_key}/getUpdates",
-#             ).json()
-#         time.sleep(5)
-
-#     return recent_message
-incoming_message = ""
+class ReturnableThread(Thread):
+    # This class is a subclass of Thread that allows the thread to return a value.
+    def __init__(self, target):
+        Thread.__init__(self)
+        self.target = target
+        self.result = None
+    
+    def run(self) -> None:
+        self.result = self.target()
 
 def every(delay, task):
   next_time = time.time() + delay
+
   while True:
     time.sleep(max(0, next_time - time.time()))
     try:
     #   task()
       results = task()
+
     except Exception:
       traceback.print_exc() 
     # skip tasks if we are behind schedule:
     next_time += (time.time() - next_time) // delay * delay + delay
-    print(results)
+    # if len(all_results) == 2:
+    #     if all_results[0] == all_results[1]:
+    #         return all_results[-1]
+    #     else:
+    #        return all_results
+    return results
 
 
 def message_check():
@@ -36,36 +44,17 @@ def message_check():
             ).json()
    chat_id = recent_message['result'][-1]['message']['chat']['id']
    message_contents = recent_message['result'][-1]['message']['text']
-   return chat_id, message_contents
+   returned_data = [chat_id, message_contents]
+   return returned_data
 
 
-# thread = threading.Thread(target=lambda: every(2, message_check))
-thread = threading.Thread(target=lambda: every(2, message_check))
+thread = ReturnableThread(target=lambda: every(1, message_check))
 thread.start()
 
-def task_done():
-   print("task done")
+while thread.result is None:
+   time.sleep(0.1)
+
+print(thread.result[1])
 
 
 
-# def timer(timer_runs):
-#    while timer_runs.is_set():
-#       thread = threading.Thread(target=lambda: every(2, message_check))
-#       thread.start()
-
-# timer_runs = threading.Event()
-# timer_runs.set()
-# time.sleep(15)
-# timer_runs.clear()
-# print("Finished")
-
-
-
-
-
-# reply_text = 'hello friend'
-
-# ivy_reply = requests.post(
-#         url=f'https://api.telegram.org/bot{telegram_key}/sendMessage',
-#         data={'chat_id': chat_id, 'text': reply_text}
-#     ).json()
