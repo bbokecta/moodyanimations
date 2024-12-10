@@ -4,7 +4,7 @@ from telegrambot import message_check, ivy_reply
 
 app = Flask(__name__, static_url_path='/static') 
 
-new_question = ""
+new_question = "hey"
 
 @app.route('/')
 def index():

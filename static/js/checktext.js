@@ -16,7 +16,7 @@ function check_messages() {
    })
 }
 
-const interval = 2000;
+const interval = 1000;
 
 setInterval(check_messages, interval)
 // check_messages();

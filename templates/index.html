@@ -17,16 +17,19 @@
       }
       </script>
       
+      
 </head>
 <body style="background-color: pink;">
 	<script type="module" src="/static/js/testing.js"></script>
+  <!-- <script type="module" src="/static/js/checktext.js">document.write(check_messages());</script> -->
     <!-- <img src="https://urlme.me/{{number}}/{{bot_answer}}.jpg"/> -->
+
 	<form method="POST">
             <label>Question:</label><br>
             <input name=req_question type="text" value={{question}}><br><br> 
             <input type="submit" value="Submit!"><br><br>
 	</form>
 
-    <p>{{bot_answer}}</p>  
+    <!-- <p>{{bot_answer}}</p>   -->
 </body>
 </html>
