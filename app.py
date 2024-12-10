@@ -1,24 +1,25 @@
 from flask import Flask, render_template, request
 from chatbot import get_response
-from telegrambot import ivy_reply
-from telegrambot2 import check_messages 
+from telegrambot2 import get_messages, arabica_reply 
 
 app = Flask(__name__, static_url_path='/static') 
 
-new_question = "hey"
+message_update = get_messages()
+new_question = message_update[0]
 
 @app.route('/')
 def index():
-    new_question = check_messages()
+    chat_id = message_update[1]
     answer = get_response(new_question)
-    ivy_reply(answer)
+    arabica_reply(chat_id, answer)
     return render_template('index.html', question=new_question, bot_answer=answer, number=4)
 
 @app.route('/', methods=['POST'])
 def index_post():
-    # user_question = request.form['req_question']
-    user_question = check_messages()
-    answer = get_response(user_question)
-    bot_answer = answer.split('-')[0]
-    num_answer = answer.split('-')[1]
-    return render_template('index.html', question=user_question, bot_answer=bot_answer, number=num_answer)
+    message_update = get_messages()
+    new_question = message_update[0]
+    chat_id = message_update[1]
+
+    answer = get_response(new_question)
+    arabica_reply(chat_id, answer)
+    return render_template('index.html', question=new_question, bot_answer=answer, number=4)

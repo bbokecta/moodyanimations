@@ -1,5 +1,6 @@
 import json
 import urllib.request
+import requests
 
 with open("arabica_key.txt", "r") as key_file:
     arabica_key = key_file.read()
@@ -12,10 +13,13 @@ def get_messages():
 
     message_data = json.loads(response.read())
 
-    text = message_data['result'][0]['message']['text']
-    chat_id = message_data['result'][0]['message']['chat']['id']
+    text = message_data['result'][-1]['message']['text']
+    chat_id = message_data['result'][-1]['message']['chat']['id']
 
     return [text, chat_id]
 
-results = get_messages()
-print(results)
+def arabica_reply(chat_id, reply_text):
+    requests.post(
+    url=f'https://api.telegram.org/bot{arabica_key}/sendMessage',
+    data={'chat_id': chat_id, 'text': reply_text}
+    ).json()
