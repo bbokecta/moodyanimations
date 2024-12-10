@@ -15,8 +15,9 @@ def get_messages():
 
     text = message_data['result'][-1]['message']['text']
     chat_id = message_data['result'][-1]['message']['chat']['id']
-
-    return [text, chat_id]
+    message_id = message_data['result'][-1]['message']['date']
+    # print(text)
+    return [text, chat_id, message_id]
 
 def arabica_reply(chat_id, reply_text):
     requests.post(

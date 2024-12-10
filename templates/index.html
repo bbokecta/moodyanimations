@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Moody Animation</title>
     <link type="text/css" rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"></script>
     <style>
 			body { margin: 0; }
 		</style>
@@ -16,20 +17,25 @@
         }
       }
       </script>
+      <script>
+        var socket = io.connect('http://127.0.0.1:5000/');
+        socket.on('new_data', function(msg) {
+          document.getElementById('response').innerHTML = msg.data;
+        }
+      )
+      </script>
       
       
 </head>
-<body style="background-color: pink;">
+<body style="background-color: black;">
 	<script type="module" src="/static/js/testing.js"></script>
   <!-- <script type="module" src="/static/js/checktext.js">document.write(check_messages());</script> -->
     <!-- <img src="https://urlme.me/{{number}}/{{bot_answer}}.jpg"/> -->
 
-	<form method="POST">
-            <label>Question:</label><br>
-            <input name=req_question type="text" value={{question}}><br><br> 
-            <input type="submit" value="Submit!"><br><br>
-	</form>
+	<!-- <form method="POST">
+            <input type="submit" value="Refresh"><br><br>
+	</form> -->
 
-    <p>{{bot_answer}}</p>  
+    <p id="response">{{bot_answer}}</p>  
 </body>
 </html>
