@@ -79,7 +79,7 @@ import * as THREE from 'three';
 				group = new THREE.Group();
 				scene.add( group );
 
-				group.add( new THREE.GridHelper( 4, 12, 0x888888, 0x444444 ) );
+				// group.add( new THREE.GridHelper( 4, 12, 0x888888, 0x444444 ) );
 
 				cubes = new THREE.Group();
 				group.add( cubes );

@@ -14,7 +14,11 @@ def index():
     chat_id = result[1]
 
     answer = get_response(new_question)
-    arabica_reply(chat_id, answer)
+
+    if len(message_list) > 1:
+        if message_list[-1][2] != message_list[-2][2]:
+            arabica_reply(chat_id, answer)
+            
     return render_template('index.html', question=new_question, bot_answer=answer, number=4)
 
 @app.route('/', methods=['POST'])
