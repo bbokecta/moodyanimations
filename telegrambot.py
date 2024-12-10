@@ -16,8 +16,7 @@ def message_check():
    returned_data = [chat_id, message_contents]
    return returned_data
 
-returned_data = message_check()
-print(returned_data)
+chat_id = message_check()[0]
 
 reply_text = 'hello friend'
 

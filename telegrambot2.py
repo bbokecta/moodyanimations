@@ -1,21 +1,21 @@
-import requests
-import urllib.request
 import json
+import urllib.request
 
-with open("telegram_keys.txt", "r") as telegram_file:
-    telegram_key = telegram_file.read()
-url=f"https://api.telegram.org/bot{telegram_key}/getUpdates"
+with open("arabica_key.txt", "r") as key_file:
+    arabica_key = key_file.read()
 
-def check_messages(): 
+def get_messages():
+    url = f"https://api.telegram.org/bot{arabica_key}/getUpdates"
 
     request = urllib.request.Request(url)
     response = urllib.request.urlopen(request)
-    
-    recent_message = json.loads(response.read())
 
-    # chat_id = recent_message['result'][-1]['message']['chat']['id']
-    message_contents = recent_message['result'][-1]['message']['text']
-    # returned_data = [chat_id, message_contents]
-    print(message_contents)
+    message_data = json.loads(response.read())
 
-check_messages()
+    text = message_data['result'][0]['message']['text']
+    chat_id = message_data['result'][0]['message']['chat']['id']
+
+    return [text, chat_id]
+
+results = get_messages()
+print(results)
