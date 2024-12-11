@@ -39,12 +39,13 @@ def update_text():
     chat_id = result[1]
 
     answer = get_response(new_question)
+    question_answer = [new_question, answer]
 
     if len(message_list) > 1:
         if message_list[-1][2] != message_list[-2][2]:
             arabica_reply(chat_id, answer)
      
-    socketio.emit('new_data', {'data' : answer})
+    socketio.emit('new_data', {'data' : question_answer})
 
 if (__name__ == "__main__"):
     scheduler = APScheduler()

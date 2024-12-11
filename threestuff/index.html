@@ -3,8 +3,10 @@
 	<head>
 		<meta charset="utf-8">
 		<title>My first three.js app</title>
+		<link type="text/css" rel="stylesheet" href="/style.css">
 		<style>
 			body { margin: 0; }
+			
 		</style>
         <script type="importmap">
             {
@@ -15,7 +17,12 @@
             }
           </script>
 	</head>
-	<body>
-		<script type="module" src="/newcube.js"></script>
+	<body style="background-color: black;">
+		<div style="position:relative; display: inline-block;">
+			<div style="position: absolute; top: 1em;">
+				<script type="module" src="/newcube.js"></script>
+			</div>
+			<div id="message_bubble" class="bubble left" style="position: absolute; left: 4em; top: 52em;">hey hey hey</div>
+		</div>
 	</body>
 </html>

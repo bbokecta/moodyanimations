@@ -23,7 +23,7 @@ import * as THREE from 'three';
 
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setSize( window.innerWidth * 0.95, window.innerHeight * 0.95 );
 				renderer.setAnimationLoop( animate );
 				document.body.appendChild( renderer.domElement );
 
@@ -45,7 +45,7 @@ import * as THREE from 'three';
 			function animate() {
 
 				// mesh.rotation.x += 0.005;
-				mesh.rotation.y += 0.01;
+				mesh.rotation.y += 0.001;
 
 				renderer.render( scene, camera );
 

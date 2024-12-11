@@ -20,15 +20,23 @@
       <script>
         var socket = io.connect('http://127.0.0.1:5000/');
         socket.on('new_data', function(msg) {
-          document.getElementById('response').innerHTML = msg.data;
+          document.getElementById('response').innerHTML = msg.data[1];
+          document.getElementById('message_bubble').innerHTML = msg.data[0];
         }
       )
       </script>
       
       
 </head>
-<body style="background-color: black;">
-	<script type="module" src="/static/js/single_cube.js"></script>
-    <p id="response">{{bot_answer}}</p>  
+<body style="background-color: black; width: 100%;">
+	<div style="position:relative; display: inline-block; width: 100%;">
+    <p id="response" style="position: absolute; top: 1em;">{{bot_answer}}</p>
+    
+    <div style="position: absolute; top: 5em;">
+      <script type="module" src="/static/js/single_cube.js"></script>
+    </div>
+    <div id="message_bubble" class="bubble left" style="position: absolute; left: 4em; top: 52em;">{{question}}</div>
+  </div>
+    
 </body>
 </html>
