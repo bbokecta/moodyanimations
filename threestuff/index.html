@@ -17,12 +17,12 @@
             }
           </script>
 	</head>
-	<body style="background-color: #aaccff;">
-		<div style="position:relative; display: inline-block; margin-top: -5;">
-			<div style="position: absolute;">
+	<body style="background-color: black;">
+		<div style="position:relative; display: inline-block;">
+			<div style="position: absolute; top: 1em;">
 				<!-- <script type="module" src="/newcube.js"></script> -->
 				 <!-- plane geometry below! -->
-				<script type="module">
+				<!-- <script type="module">
 
 					import * as THREE from 'three';
 		
@@ -35,13 +35,6 @@
 					let mesh, geometry, material, clock;
 		
 					const worldWidth = 128, worldDepth = 128;
-
-					// let mouseX = 0, mouseY = 0;
-
-					// let windowHalfX = window.innerWidth / 2;
-					// let windowHalfY = window.innerHeight / 2;
-
-					// document.addEventListener( 'mousemove', onDocumentMouseMove );
 		
 					init();
 		
@@ -81,7 +74,7 @@
 		
 						renderer = new THREE.WebGLRenderer( { antialias: true } );
 						renderer.setPixelRatio( window.devicePixelRatio );
-						renderer.setSize( window.innerWidth, window.innerHeight * 0.98);
+						renderer.setSize( window.innerWidth, window.innerHeight );
 						renderer.setAnimationLoop( animate );
 						document.body.appendChild( renderer.domElement );
 		
@@ -90,8 +83,8 @@
 						controls.movementSpeed = 500;
 						controls.lookSpeed = 0.1;
 		
-						// stats = new Stats();
-						// document.body.appendChild( stats.dom );
+						stats = new Stats();
+						document.body.appendChild( stats.dom );
 		
 						//
 		
@@ -106,23 +99,16 @@
 		
 						renderer.setSize( window.innerWidth, window.innerHeight );
 		
-						// controls.handleResize();
+						controls.handleResize();
 		
 					}
-
-					// function onDocumentMouseMove( event ) {
-
-					// 	mouseX = ( event.clientX - windowHalfX ) / 10;
-					// 	// mouseY = ( event.clientY - windowHalfY ) * 2;
-
-					// }
 		
 					//
 		
 					function animate() {
 		
 						render();
-						// stats.update();
+						stats.update();
 		
 					}
 		
@@ -141,18 +127,143 @@
 						}
 		
 						position.needsUpdate = true;
-
-						// camera.position.x += ( mouseX - camera.position.x ) * .05;
-						// camera.position.y += ( - mouseY - camera.position.y ) * .05;
-						// camera.lookAt( scene.position );
 		
 						controls.update( delta );
 						renderer.render( scene, camera );
 		
 					}
 		
-				</script>
+				</script> -->
 				<!-- plane geometry above! -->
+
+				<script type="module">
+
+					import * as THREE from 'three';
+		
+					import { ParallaxBarrierEffect } from 'three/addons/effects/ParallaxBarrierEffect.js';
+		
+					let container, camera, scene, renderer, effect;
+		
+					const spheres = [];
+		
+					let mouseX = 0;
+					let mouseY = 0;
+		
+					let windowHalfX = window.innerWidth / 2;
+					let windowHalfY = window.innerHeight / 2;
+		
+					document.addEventListener( 'mousemove', onDocumentMouseMove );
+		
+					init();
+		
+					function init() {
+		
+						container = document.createElement( 'div' );
+						document.body.appendChild( container );
+		
+						camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.01, 100 );
+						camera.position.z = 3;
+		
+						const path = '/HeartInTheSand/';
+						const format = '.jpg';
+						const urls = [
+							path + 'posx' + format, path + 'negx' + format,
+							path + 'posy' + format, path + 'negy' + format,
+							path + 'posz' + format, path + 'negz' + format
+						];
+		
+						const textureCube = new THREE.CubeTextureLoader().load( urls );
+		
+						scene = new THREE.Scene();
+						scene.background = textureCube;
+
+						const textureSphere = new THREE.CubeTextureLoader().load(urls);
+
+						textureSphere.mapping = THREE.CubeRefractionMapping;
+		
+						const geometry = new THREE.SphereGeometry( 0.1, 32, 16 );
+						const material = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureSphere, refractionRatio: 0.95 } );
+		
+						for ( let i = 0; i < 500; i ++ ) {
+		
+							const mesh = new THREE.Mesh( geometry, material );
+		
+							mesh.position.x = Math.random() * 10 - 5;
+							mesh.position.y = Math.random() * 10 - 5;
+							mesh.position.z = Math.random() * 10 - 5;
+		
+							mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 3 + 1;
+		
+							scene.add( mesh );
+		
+							spheres.push( mesh );
+		
+						}
+		
+						//
+		
+						renderer = new THREE.WebGLRenderer();
+						renderer.setPixelRatio( window.devicePixelRatio );
+						renderer.setAnimationLoop( animate );
+						container.appendChild( renderer.domElement );
+		
+						const width = window.innerWidth || 2;
+						const height = window.innerHeight || 2;
+		
+						effect = new ParallaxBarrierEffect( renderer );
+						effect.setSize( width, height );
+		
+						//
+		
+						window.addEventListener( 'resize', onWindowResize );
+		
+					}
+		
+					function onWindowResize() {
+		
+						windowHalfX = window.innerWidth / 2;
+						windowHalfY = window.innerHeight / 2;
+		
+						camera.aspect = window.innerWidth / window.innerHeight;
+						camera.updateProjectionMatrix();
+		
+						effect.setSize( window.innerWidth, window.innerHeight );
+		
+					}
+		
+					function onDocumentMouseMove( event ) {
+		
+						mouseX = ( event.clientX - windowHalfX ) / 100;
+						mouseY = ( event.clientY - windowHalfY ) / 100;
+		
+					}
+		
+					//
+		
+					function animate() {
+		
+						const timer = 0.0001 * Date.now();
+		
+						camera.position.x += ( mouseX - camera.position.x ) * .05;
+						camera.position.y += ( - mouseY - camera.position.y ) * .05;
+		
+						camera.lookAt( scene.position );
+		
+						for ( let i = 0, il = spheres.length; i < il; i ++ ) {
+		
+							const sphere = spheres[ i ];
+		
+							sphere.position.x = 5 * Math.cos( timer + i );
+							sphere.position.y = 5 * Math.sin( timer + i * 1.1 );
+		
+						}
+		
+						effect.render( scene, camera );
+		
+					}
+		
+				</script>
+
 			</div>
 			<div id="message_bubble" class="bubble left" style="position: absolute; left: 4em; top: 52em;">hey hey hey</div>
 		</div>
