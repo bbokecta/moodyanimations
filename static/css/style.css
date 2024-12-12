@@ -1,10 +1,13 @@
 p {
     color: #FFFFFF;
-	  font-size: 40px; font-weight: bold;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	  font-size: 40px;
+    font-family: "Shadows Into Light", cursive;
+   font-weight: 200;
+   font-style: normal;
     /* margin: 20px; */
-    width: 100%;
+    width: 75%;
     text-align: center;
+    line-height: 120%;
 }
 
 .bubble {

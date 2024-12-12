@@ -409,16 +409,18 @@
 						textTex: {value: tex}
 					}
 					
-					
+					let url = "https://threejs.org/examples/textures/floors/FloorsCheckerboard_S_Diffuse.jpg";
+					const textureCube = new THREE.TextureLoader().load(url, tex => {
+						tex.wrapS = THREE.RepeatWrapping;
+						tex.wrapT = THREE.RepeatWrapping;
+						tex.repeat.set( 3, 1 );
+					  })
+
 					let g = new THREE.SphereGeometry();
 					g.rotateY(Math.PI);
 					let m = new THREE.MeshLambertMaterial({
 						color: 0x7f7f64,
-					  map: new THREE.TextureLoader().load("https://threejs.org/examples/textures/floors/FloorsCheckerboard_S_Diffuse.jpg", tex => {
-						tex.wrapS = THREE.RepeatWrapping;
-						tex.wrapT = THREE.RepeatWrapping;
-						tex.repeat.set( 3, 1 );
-					  }),
+					  map: textureCube,
 					  side: THREE.DoubleSide,
 					  onBeforeCompile: shader => {
 						shader.uniforms.time = u.time;
