@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from flask_apscheduler import APScheduler #FOR FERGUS
 from chatbot import get_response
-from telegrambot2 import get_messages, arabica_reply
+from telegrambot import get_messages, arabica_reply
 from flask_socketio import SocketIO #FOR FERGUS
 
 app = Flask(__name__, static_url_path='/static') 
