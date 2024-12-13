@@ -44,11 +44,8 @@ def update_text():
     if len(message_list) > 1:
         if message_list[-1][2] != message_list[-2][2]:
             arabica_reply(chat_id, answer)
-    #FOR FERGUS: 'NEW_DATA' IS AN EVENT SET BY ME. 'DATA' IS A KEY NAME SET BY THE SOCKET LIBRARY, 'QUESTION_ANSWER' IS A VARIABLE CONTAINING MY GPT'S RESPONSE  
     socketio.emit('new_data', {'data' : question_answer})
 
-# FOR FERGUS: THIS IS PYTHON'S WAY OF RUNNING A FUNCTION EVERY X SECONDS. 
-# THE PARAMETER 'FUNC' SHOULD EQUAL THE FUNCTION YOU WANT TO RUN REPEATEDLY
 if (__name__ == "__main__"):
     scheduler = APScheduler()
     socketio = SocketIO(app)

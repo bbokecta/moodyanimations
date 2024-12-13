@@ -10,9 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"></script>
-    <!-- <style>
-			body { margin: 0; }
-		</style> -->
+
     <script type="importmap">
       {
         "imports": {
@@ -21,7 +19,7 @@
         }
       }
       </script>
-      <!-- FOR FERGUS: WEBSOCKET EVENT LISTENER -->
+
       <script> 
         var socket = io.connect('http://127.0.0.1:5000/');
           socket.on('new_data', function(msg) { //FOR FERGUS: 'msg' here is a variable name for your newly received data
@@ -35,11 +33,9 @@
 </head>
 <body style="background-color: black; width: 100%; margin: -15px 0px 0px 0px;">
 	<div style="position:relative; display: inline-block; width: 100%; height: 100%;">
-    <!-- FOR FERGUS: the 'response' id is where I'm sending my newly received socket message -->
     <p id="response" style="position: absolute; top: 1em; left: 5em;">{{bot_answer}}</p>
     
     <div style="position: absolute; top: 0em;">
-      <!-- <script type="module" src="/static/js/single_cube.js"></script> -->
       <script type="module">
 
         import * as THREE from 'three';
